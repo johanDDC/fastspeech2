@@ -26,7 +26,7 @@ def create_wandb_log(epoch, loss, total_loss):
 
 def train(model: FastSpeech2, optimizer, loss_fn, dataloader, cfg, current_step=0):
     model.train()
-    device = cfg.train.device
+    device = cfg.model.base_settings.train.device
 
     model.to(device)
     wandb.watch(model, optimizer, log="all", log_freq=10)
@@ -66,7 +66,7 @@ def train(model: FastSpeech2, optimizer, loss_fn, dataloader, cfg, current_step=
                 optimizer.zero_grad(set_to_none=True)
                 scheduler.step()
 
-                if current_step % cfg.train.log_step == 0:
+                if current_step % cfg.log.log_step == 0:
                     wandb_log = create_wandb_log(epoch, loss, total_loss)
                     wandb.log(wandb_log)
                     model.train()
@@ -77,7 +77,7 @@ def train(model: FastSpeech2, optimizer, loss_fn, dataloader, cfg, current_step=
                         "model": model.state_dict(), "optimizer": optimizer.state_dict(),
                         "scheduler": scheduler.state_dict()
                     },
-                    os.path.join(cfg.train.checkpoint_path, f'checkpoint_{current_step}.pth'))
+                    os.path.join(cfg.data.checkpoint_path, f'checkpoint_{current_step}.pth'))
 
 
 if __name__ == '__main__':

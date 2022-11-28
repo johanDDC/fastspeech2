@@ -21,15 +21,12 @@ data:
   data_dir: 'data/LJSpeech-1.1'
   train_meta: "data/LJSpeech-1.1/metafiles/train_filelist.txt"
   wav_dir: "data/LJSpeech-1.1/wavs"
-  alignment_path: "data/LJSpeech-1.1/alignments"
   mel_ground_truth: "data/LJSpeech-1.1/mels"
   energy_path: "data/LJSpeech-1.1/energy"
   pitch_path: "data/LJSpeech-1.1/pitch"
   data_path: "data/LJSpeech-1.1/train.txt"
   checkpoint_path: "checkpoints/"
-  text_cleaners: ['english_cleaners']
-  max_len: 1000
-  vocab_size: 300
+  text_cleaners: [ 'english_cleaners' ]
   pad_idx: 0
   num_mels: 80
 
@@ -48,40 +45,30 @@ preprocess:
   need: False
 
 train:
+  optimizer:
     batch_size: 16
-    batch_expand_size: 32
     betas: [ 0.9, 0.98 ]
     eps: 0.000000001
     weight_decay: 0.000001
     grad_clip_thresh: 1.0
 
-    warm_up_step: 4000
-    anneal_steps: [ 300000, 400000, 500000 ]
-    anneal_rate: 0.3
     max_lr: 0.0003
     anneal_strategy: "cos"
     pct_start: 0.1
     div_factor: 10000
 
 
-    total_step: 160100
-    log_step: 100
-    synth_step: 1000
-    val_step: 1000
-    save_step: 5000
-
-    device: "cuda"
-    checkpoint_path: "checkpoints/"
-
+  total_step: 160100
+  save_step: 5000
 
 log:
   wandb_project_name: "dla_tts"
-  log_audio_steps: 500
+  log_step: 100
 
 val:
-  model_path: "checkpoints/checkpoint_35000.pth"
+  model_path: "checkpoints/checkpoint_95000.pth"
   val_texts: "data/val_texts.txt"
-  duration_control: 1
-  energy_control: 1
-  pitch_control: 1
+  duration_control: 0.9
+  energy_control: 1.4
+  pitch_control: 1.2
 
