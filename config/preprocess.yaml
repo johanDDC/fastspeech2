@@ -1,0 +1,9 @@
+wav_dir: "data/LJSpeech-1.1/wavs"
+sample_rate: 22050
+hop_length: 160
+win_length: 400
+filter_length: 400
+mels_path: "data/LJSpeech-1.1/mels"
+energy_path: "data/LJSpeech-1.1/energy"
+pitch_path: "data/LJSpeech-1.1/pitch"
+n_mels: 80

@@ -1,0 +1,13 @@
+*.pyc
+*.ipynb
+*.patch
+data/LJSpeech-1.1/energy
+data/LJSpeech-1.1/mels
+data/LJSpeech-1.1/pitch
+data/LJSpeech-1.1/wavs
+data/LJSpeech-1.1/README
+data/LJSpeech-1.1/train.txt
+checkpoints
+wandb
+results
+.idea

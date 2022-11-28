@@ -1,0 +1,87 @@
+model:
+  base_settings:
+    max_len: 2000
+    n_layers: 4
+    attention_heads: 2
+    hidden_dim: 256
+    decoder_layers: 4
+    decoder_hidden: 256
+    conv_filter_size: 1024
+    conv_kernel_size: [ 9, 1 ]
+    dropout: 0.1
+    num_mels: 80
+    device: "cuda"
+
+  variance_predictor:
+    filter_size: 256
+    kernel_size: 3
+    dropout: 0.5
+
+data:
+  data_dir: 'data/LJSpeech-1.1'
+  train_meta: "data/LJSpeech-1.1/metafiles/train_filelist.txt"
+  wav_dir: "data/LJSpeech-1.1/wavs"
+  alignment_path: "data/LJSpeech-1.1/alignments"
+  mel_ground_truth: "data/LJSpeech-1.1/mels"
+  energy_path: "data/LJSpeech-1.1/energy"
+  pitch_path: "data/LJSpeech-1.1/pitch"
+  data_path: "data/LJSpeech-1.1/train.txt"
+  checkpoint_path: "checkpoints/"
+  text_cleaners: ['english_cleaners']
+  max_len: 1000
+  vocab_size: 300
+  pad_idx: 0
+  num_mels: 80
+
+  pitch_min: -1.158787147866215
+  pitch_max: 5.050295645579435
+  pitch_mean: 125.1689889305895
+  pitch_std: 108.0142292627427
+
+  energy_min: -1.158787147866215
+  energy_max: -0.6635988671505121
+  energy_mean: 7.73050894
+  energy_std: 7.09500833
+
+
+preprocess:
+  need: False
+
+train:
+    batch_size: 16
+    batch_expand_size: 32
+    betas: [ 0.9, 0.98 ]
+    eps: 0.000000001
+    weight_decay: 0.000001
+    grad_clip_thresh: 1.0
+
+    warm_up_step: 4000
+    anneal_steps: [ 300000, 400000, 500000 ]
+    anneal_rate: 0.3
+    max_lr: 0.0003
+    anneal_strategy: "cos"
+    pct_start: 0.1
+    div_factor: 10000
+
+
+    total_step: 160100
+    log_step: 100
+    synth_step: 1000
+    val_step: 1000
+    save_step: 5000
+
+    device: "cuda"
+    checkpoint_path: "checkpoints/"
+
+
+log:
+  wandb_project_name: "dla_tts"
+  log_audio_steps: 500
+
+val:
+  model_path: "checkpoints/checkpoint_35000.pth"
+  val_texts: "data/val_texts.txt"
+  duration_control: 1
+  energy_control: 1
+  pitch_control: 1
+
