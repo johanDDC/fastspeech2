@@ -10,7 +10,7 @@ model:
     conv_kernel_size: [ 9, 1 ]
     dropout: 0.1
     num_mels: 80
-    device: "cpu"
+    device: "cuda"
 
   variance_predictor:
     filter_size: 256
