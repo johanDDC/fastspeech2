@@ -16,12 +16,14 @@ Training
 Before training you should do preprocessing (besides you already have preprocessed data).
 To do so you should firstly compute statistics by running followig command
 
-``python3 preprocessing/get_stats.py``
+``cd preprocessing``
+
+``python3 get_stats.py``
 
 Than carefully record gained statistics in appropriate fields of file `config/fastspeech2.yaml`. 
 And than run command
 
-``python3 peprocessing/get_target_pitch_energy.py``
+``python3 get_target_pitch_energy.py``
 
 Note, that it can take a significant amount of time.
 
@@ -30,6 +32,8 @@ got dataset and situated it by path `data/LJSpeed-1.1`. If it's not the case,
 than run script by path `scripts/download_dataset.sh`.
 
 After all preprocessing stuff is done, you may run training by command
+
+``cd ..``
 
 ``python3 train.py``
 
