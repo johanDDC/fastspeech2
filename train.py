@@ -26,7 +26,7 @@ def create_wandb_log(epoch, loss, total_loss):
 
 def train(model: FastSpeech2, optimizer, loss_fn, dataloader, cfg, current_step=0):
     model.train()
-    device = cfg.model.base_settings.train.device
+    device = cfg.model.base_settings.device
 
     model.to(device)
     wandb.watch(model, optimizer, log="all", log_freq=10)
@@ -36,15 +36,15 @@ def train(model: FastSpeech2, optimizer, loss_fn, dataloader, cfg, current_step=
                 current_step += 1
                 tqdm_bar.update(1)
 
-                x = batch["src"].long().to(train_config.device, non_blocking=True)
-                input_length = batch["src_length"].long().to(train_config.device, non_blocking=True)
-                out_length = batch["mel_length"].long().to(train_config.device, non_blocking=True)
-                mel_target = batch["mel_target"].float().to(train_config.device, non_blocking=True)
-                duration = batch["duration"].int().to(train_config.device, non_blocking=True)
-                pitch = batch["pitch"].float().to(train_config.device, non_blocking=True)
-                energy = batch["energy"].float().to(train_config.device, non_blocking=True)
-                mel_pos = batch["mel_pos"].long().to(train_config.device, non_blocking=True)
-                src_pos = batch["src_pos"].long().to(train_config.device, non_blocking=True)
+                x = batch["src"].long().to(model_config.base_settings.device, non_blocking=True)
+                input_length = batch["src_length"].long().to(model_config.base_settings.device, non_blocking=True)
+                out_length = batch["mel_length"].long().to(model_config.base_settings.device, non_blocking=True)
+                mel_target = batch["mel_target"].float().to(model_config.base_settings.device, non_blocking=True)
+                duration = batch["duration"].int().to(model_config.base_settings.device, non_blocking=True)
+                pitch = batch["pitch"].float().to(model_config.base_settings.device, non_blocking=True)
+                energy = batch["energy"].float().to(model_config.base_settings.device, non_blocking=True)
+                mel_pos = batch["mel_pos"].long().to(model_config.base_settings.device, non_blocking=True)
+                src_pos = batch["src_pos"].long().to(model_config.base_settings.device, non_blocking=True)
                 max_mel_len = batch["mel_max_len"]
                 max_input_len = batch["max_len"]
 

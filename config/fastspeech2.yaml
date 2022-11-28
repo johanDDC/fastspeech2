@@ -10,7 +10,7 @@ model:
     conv_kernel_size: [ 9, 1 ]
     dropout: 0.1
     num_mels: 80
-    device: "cuda"
+    device: "cpu"
 
   variance_predictor:
     filter_size: 256
@@ -45,17 +45,16 @@ preprocess:
   need: False
 
 train:
-  optimizer:
-    batch_size: 16
-    betas: [ 0.9, 0.98 ]
-    eps: 0.000000001
-    weight_decay: 0.000001
-    grad_clip_thresh: 1.0
+  batch_size: 16
+  betas: [ 0.9, 0.98 ]
+  eps: 0.000000001
+  weight_decay: 0.000001
+  grad_clip_thresh: 1.0
 
-    max_lr: 0.0003
-    anneal_strategy: "cos"
-    pct_start: 0.1
-    div_factor: 10000
+  max_lr: 0.0003
+  anneal_strategy: "cos"
+  pct_start: 0.1
+  div_factor: 10000
 
 
   total_step: 160100
@@ -68,7 +67,7 @@ log:
 val:
   model_path: "checkpoints/checkpoint_95000.pth"
   val_texts: "data/val_texts.txt"
-  duration_control: 0.9
-  energy_control: 1.4
-  pitch_control: 1.2
+  duration_control: 0.8
+  energy_control: 0.8
+  pitch_control: 0.8
 
